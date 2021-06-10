@@ -61,8 +61,8 @@ def roomdata():
     df = pd.read_csv('people.csv')
     df1=df.replace(np.nan,"",regex=True)
     data = df1.values.tolist()
-    room = request.form.get("SearchBar")
-    return render_template('search.html',dict=data, name=room)
+    room = request.form.get("SearchBar1")
+    return render_template('search.html',dict=data, room=room)
 
 @app.route('/update',methods=["POST","GET"])
 def updatedata():	
