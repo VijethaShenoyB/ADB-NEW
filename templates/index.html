@@ -18,6 +18,11 @@
         <br>    
         <br>
         <br>
+        <p>To view the details of every member, click the button below</p>
+        <form action="/alldata", method="POST" , method = "GET">
+            <input type="submit" id="button" style="margin-left: 10%;width: 10%;" value="Show all Data"/>
+        </form>
+        <p>You can also check the individual details and then update/delete their records as follows:</p>
         <form action="/takedata" , method="POST" , method = "GET" style="margin-left: 100px; margin-top: 80px;">
             <p>Enter any of the following names : Chuck, Dar, Dave, Dhru, Drsl, Tavo, Upset</p>
         <label id="labels">Enter a Name to search:</label>
@@ -29,8 +34,6 @@
             <input type="text" id="searchBar" name="salBar"/>
             <input type="submit" style="margin-left: 10%;width: 10%;" value="Go"/>
             </form>
-        <form action="/alldata", method="POST" , method = "GET">
-            <input type="submit" id="button" style="margin-left: 10%;width: 10%;" value="Show all Data"/>
-        </form>
+        
     </body>
 </html>

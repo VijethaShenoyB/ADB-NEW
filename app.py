@@ -23,12 +23,12 @@ def hello():
 def home():
 	return render_template('index.html')
 
-@app.route('/alldata',methods=["POST","GET"])
+@app.route('/details',methods=["POST","GET"])
 def search():	
 	df = pd.read_csv('people.csv')
 	df1=df.replace(np.nan,"",regex=True)
 	data = df1.values.tolist()
-	return render_template('alldata.html',dict=data)
+	return render_template('details.html',dict=data)
 
 @app.route('/takedata',methods=["POST","GET"])
 def searchdata():
@@ -39,7 +39,7 @@ def searchdata():
 	return render_template('search.html',dict=data, name=name)
 	
 
-@app.route('/saldata',methods=["POST","GET"])
+@app.route('/salarydata',methods=["POST","GET"])
 def saldata():
 	df = pd.read_csv('people.csv')
 	df1=df.replace(np.nan,"",regex=True)
