@@ -37,6 +37,14 @@ def searchdata():
 	data = df1.values.tolist()
 	name = request.form.get("SearchBar")
 	return render_template('search.html',dict=data, name=name)
+
+@app.route('/roomdata',methods=["POST","GET"])
+def searchdata():
+	df = pd.read_csv('people.csv')
+	df1=df.replace(np.nan,"",regex=True)
+	data = df1.values.tolist()
+	room = request.form.get("SearchBar")
+	return render_template('search.html',dict=data, name=room)
 	
 
 @app.route('/salarydata',methods=["POST","GET"])
