@@ -5,15 +5,17 @@ import numpy as np
 import os
 app = Flask(__name__)
 
-path="./names.csv"
+path="./people.csv"
 tempPath="./new.csv"
  
-fieldnames=['Room','Name','State','Picture','Caption']
+fieldnames=['Name','State','Salary','Grade','Room','Telnum','Picture','Keywords']
 
 df = pd.read_csv('people.csv')
 df1=df.replace(np.nan,"",regex=True)
 
 data = df1.values.tolist()
+
+
 
 @app.route('/', methods=["POST","GET"])
 def hello():
@@ -23,12 +25,12 @@ def hello():
 def home():
 	return render_template('index.html')
 
-@app.route('/details',methods=["POST","GET"])
+@app.route('/alldata',methods=["POST","GET"])
 def search():	
 	df = pd.read_csv('people.csv')
 	df1=df.replace(np.nan,"",regex=True)
 	data = df1.values.tolist()
-	return render_template('details.html',dict=data)
+	return render_template('alldata.html',dict=data)
 
 @app.route('/takedata',methods=["POST","GET"])
 def searchdata():
@@ -39,7 +41,7 @@ def searchdata():
 	return render_template('search.html',dict=data, name=name)
 	
 
-@app.route('/salarydata',methods=["POST","GET"])
+@app.route('/saldata',methods=["POST","GET"])
 def saldata():
 	df = pd.read_csv('people.csv')
 	df1=df.replace(np.nan,"",regex=True)
@@ -53,16 +55,7 @@ def saldata():
 			salary = float(items[2])
 		if (salary < sal):
 			people.append(items)
-	return render_template('salarydata.html',dict=people, sal=sal)
-
-
-@app.route('/roomdata',methods=["POST","GET"])
-def roomdata():	
-    df = pd.read_csv('people.csv')
-    df1=df.replace(np.nan,"",regex=True)
-    data = df1.values.tolist()
-    room = request.form.get("SearchBar")
-    return render_template('details.html',dict=data, room=room)
+	return render_template('salbaseddata.html',dict=people, sal=sal)
 
 @app.route('/update',methods=["POST","GET"])
 def updatedata():	
