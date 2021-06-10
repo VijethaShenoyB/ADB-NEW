@@ -1,0 +1,33 @@
+<html>
+<body>  
+    <h1 style="text-align: center;">All details</h1>  
+    {% for item in dict%}
+           <img style="width: 200px;height:200px;margin-left: 20%;" src="{{ url_for('static', filename=item[6]) }}" alt="No Image found"/>
+           <br>
+           <label style="margin-left: 20%;">Name:     </label> 
+           <input type="text" style="margin-left: 5%;" value={{item[0]}}>
+           <br>
+           <label style="margin-left: 20%;">State:     </label> 
+           <input type="text" style="margin-left: 5%;" value={{item[1]}}>
+           <br>
+           <label style="margin-left: 20%;">Salary:     </label> 
+           <input type="text" style="margin-left: 5%;" value={{item[2]}}>
+           <br>
+           <label style="margin-left: 20%;">Grade:     </label> 
+           <input type="text" style="margin-left: 5%;" value={{item[3]}}>
+           <br>
+           <label style="margin-left: 20%;">Room:     </label> 
+           <input type="text" style="margin-left: 5%;" value={{item[4]}}>
+           <br>
+           <label style="margin-left: 20%;">Telnum:     </label> 
+           <input type="text" style="margin-left: 5%;" value={{item[5]}}>
+           <br>
+           <label style="margin-left: 20%;">Keywords:     </label> 
+           <textarea rows="3" cols="50">{{item[7]}}</textarea>
+           <br>
+           <br>
+           <br>
+           <br>
+    {% endfor %}
+</body>   
+</html>

@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <style>
+            #SearchBar{
+                margin-left: 5%;
+                width: 30%;
+            }
+            #labels{
+                margin-left: 17%;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Rohan Alampalli Rajashekara</h2>
+        <h2>ADB Assignment1</h2>
+        <h3>1001855014</h3>
+        <br>
+        <form action="/takedata" , method="POST" , method = "GET">
+        <label id="labels">Enter a Name to search:</label>
+        <input type="text" id="SearchBar" name="SearchBar"/>
+        <input type="submit" id="button" style="margin-left: 10%;width: 10%;" value="Search"/>
+        </form>
+        <form action="/saldata" , method="POST" , method = "GET">
+            <label id="labels">Search for salary lesser than:</label>
+            <input type="text" id="searchBar" name="salBar"/>
+            <input type="submit" style="margin-left: 10%;width: 10%;" value="Search"/>
+            </form>
+        <form action="/alldata", method="POST" , method = "GET">
+            <input type="submit" id="button" style="margin-left: 10%;width: 10%;" value="Show all Data"/>
+        </form>
+    </body>
+</html>

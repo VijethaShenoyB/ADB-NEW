@@ -1,0 +1,42 @@
+<html>
+<body>  
+    
+    <h1 style="text-align: center;">Details of {{name}}</h1>  
+    {% for item in dict%}
+       {% if item[0] == name %}
+       <form action="/update", method="POST" , method = "GET">
+           <img style="width: 200px;height:200px;margin-left: 20%;" src="{{ url_for('static', filename=item[6]) }}" alt="No Image found"/>
+           <br>
+           <label style="margin-left: 20%;">Name:     </label> 
+           <input type="text" name="name" style="margin-left: 5%;" value={{item[0]}}>
+           <br>
+           <label style="margin-left: 20%;">State:     </label> 
+           <input type="text" name="state" style="margin-left: 5%;" value={{item[1]}}>
+           <br>
+           <label style="margin-left: 20%;">Salary:     </label> 
+           <input type="text" name="salary" style="margin-left: 5%;" value={{item[2]}}>
+           <br>
+           <label style="margin-left: 20%;">Grade:     </label> 
+           <input type="text" name="grade" style="margin-left: 5%;" value={{item[3]}}>
+           <br>
+           <label style="margin-left: 20%;">Room:     </label> 
+           <input type="text" name="room" style="margin-left: 5%;" value={{item[4]}}>
+           <br>
+           <label style="margin-left: 20%;">Telnum:     </label> 
+           <input type="text" name="telnum" style="margin-left: 5%;" value={{item[5]}}>
+           <br>
+           <label style="margin-left: 20%;">Keywords:     </label> 
+           <textarea rows="3" name="keywords" cols="50">{{item[7]}}</textarea>
+           <br>
+           <br>        
+            <input type="submit" id="button" name ="update" style="margin-left: 20%;width: 10%;" value="Update">    
+            <input type="submit" id="button" name = "update" style="margin-left: 20%;width: 10%;" value="Delete"> 
+
+            </form>        
+           <br>
+           <br>
+        
+        {% endif %}
+    {% endfor %}
+</body>   
+</html>
