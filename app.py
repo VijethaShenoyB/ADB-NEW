@@ -5,10 +5,10 @@ import numpy as np
 import os
 app = Flask(__name__)
 
-path="./people.csv"
+path="./names.csv"
 tempPath="./new.csv"
  
-fieldnames=['Name','State','Salary','Grade','Room','Telnum','Picture','Keywords']
+fieldnames=['Room','Name','State','Picture','Caption']
 
 df = pd.read_csv('people.csv')
 df1=df.replace(np.nan,"",regex=True)
