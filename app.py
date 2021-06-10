@@ -62,7 +62,7 @@ def roomdata():
     df1=df.replace(np.nan,"",regex=True)
     data = df1.values()
     room = request.form.get("SearchBar1")
-    return render_template('details.html',room=room)
+    return render_template('details.html',dict=room)
 
 @app.route('/update',methods=["POST","GET"])
 def updatedata():	
