@@ -55,6 +55,15 @@ def saldata():
 			people.append(items)
 	return render_template('salarydata.html',dict=people, sal=sal)
 
+
+@app.route('/roomdata',methods=["POST","GET"])
+def roomdata():
+    df = pd.read_csv('people.csv')
+    df1=df.replace(np.nan,"",regex=True)
+    data = df1.values.tolist()
+    room = request.form.get("SearchBar")
+    return render_template('search.html',dict=data, name=room)
+
 @app.route('/update',methods=["POST","GET"])
 def updatedata():	
 	name = request.form.get("name")
