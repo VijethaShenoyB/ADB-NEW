@@ -13,9 +13,8 @@ fieldnames=['Name','State','Salary','Grade','Room','Telnum','Picture','Keywords'
 df = pd.read_csv('people.csv')
 df1=df.replace(np.nan,"",regex=True)
 
-
 data = df1.values.tolist()
-print(data)
+
 
 
 @app.route('/', methods=["POST","GET"])
