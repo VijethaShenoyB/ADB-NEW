@@ -15,8 +15,6 @@ df1=df.replace(np.nan,"",regex=True)
 
 data = df1.values.tolist()
 
-
-
 @app.route('/', methods=["POST","GET"])
 def hello():
 	return render_template('index.html')
@@ -55,7 +53,7 @@ def saldata():
 			salary = float(items[2])
 		if (salary < sal):
 			people.append(items)
-	return render_template('salbaseddata.html',dict=people, sal=sal)
+	return render_template('salarydata.html',dict=people, sal=sal)
 
 @app.route('/update',methods=["POST","GET"])
 def updatedata():	
