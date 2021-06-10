@@ -57,7 +57,7 @@ def saldata():
 
 
 @app.route('/roomdata',methods=["POST","GET"])
-def roomdata():
+def roomdata():	
     df = pd.read_csv('people.csv')
     df1=df.replace(np.nan,"",regex=True)
     data = df1.values.tolist()
