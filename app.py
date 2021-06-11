@@ -5,12 +5,12 @@ import numpy as np
 import os
 app = Flask(__name__)
 
-path="./names.csv"
+path="./people.csv"
 tempPath="./new.csv"
  
 fieldnames=['Name','State','Salary','Grade','Room','Telnum','Picture','Keywords']
 
-df = pd.read_csv('names.csv')
+df = pd.read_csv('people.csv')
 df1=df.replace(np.nan,"",regex=True)
 
 data = df1.values.tolist()
