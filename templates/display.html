@@ -1,0 +1,26 @@
+<html>
+<body>  
+    <div>
+        <h4>There are total {{ecount}} Earth quakes with magnitude greater than the specified magnitude and they are shown below:  </h4>
+    
+        <table>
+            <tr>
+              <th>Time</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Magnitude</th>
+              <th>ID</th>
+              <th>Place</th>
+            </tr>
+            {% for row in setquakes %}
+                <tr>
+                    {% for column in range(row|length) %}
+                        <td>{{ row[column] }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    
+    </div><br/>  
+</body>   
+</html>

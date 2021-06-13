@@ -1,0 +1,24 @@
+<html>
+    <body>
+        <div>
+            <h4>There are total {{setnightcount}} large magnitude(specified) earthquakes happend in the night(12am to 5am) and are shown below </h4>
+            <table>
+                <tr>
+                  <th>Time</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Magnitude</th>
+                  <th>ID</th>
+                  <th>Place</th>
+                </tr>
+                {% for row in setnightRows %}
+                    <tr>
+                        {% for column in range(row|length) %}
+                            <td>{{ row[column] }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div><br/>
+    </body>
+</html>

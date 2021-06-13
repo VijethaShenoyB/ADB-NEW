@@ -1,0 +1,27 @@
+<html>
+<body>  
+    <div>
+        <h4>Earth quakes with in the specified magnitude range and date are shown below:  </h4>
+    
+        <table>
+            <tr>
+              <th>Time</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Magnitude</th>
+              <th>ID</th>
+              <th>Place</th>
+            </tr>
+            {% for row in setrangeRows %}
+                <tr>
+                    {% for column in range(row|length) %}
+                        <td>{{ row[column] }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    
+    </div><br/>
+    
+</body>   
+</html>

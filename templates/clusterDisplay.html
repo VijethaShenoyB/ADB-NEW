@@ -1,0 +1,24 @@
+<html>
+    <body>
+        <div>
+            <h4>Cluster of Earthquakes with specified magnitude are shown below: There are total {{setclustercount}} quakes in this cluster</h4>
+        
+            <table>
+                <tr>
+                  <th>Time</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Magnitude</th>
+                  <th>ID</th>
+                  <th>Place</th>
+                </tr>
+                {% for row in setclusterquakes %}
+                    <tr>
+                        {% for column in range(row|length) %}
+                            <td>{{ row[column] }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+    </body>
+</html>

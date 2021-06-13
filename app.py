@@ -3,87 +3,84 @@ import pandas as pd
 import csv
 import numpy as np
 import os
+import pyodbc
+import sys
+import redis
+from time import time
+import hashlib
+import pickle
 app = Flask(__name__)
 
-path="./names.csv"
-tempPath="./new.csv"
- 
-fieldnames=['Name','State','Salary','Grade','Room','Telnum','Picture','Keywords']
+server = 'shenoyserver.database.windows.net'
+database = 'ShenoyDB'
+username = 'vijethashenoy'
+password = 'Vijushenoy96'
+driver= '{ODBC Driver 17 for SQL Server}'
 
-df = pd.read_csv('names.csv')
-df1=df.replace(np.nan,"",regex=True)
-
-data = df1.values.tolist()
-
-
+cnxn = pyodbc.connect('DRIVER=' + driver + ';SERVER=' + server + ';PORT=1433;DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
+cursor = cnxn.cursor()
 
 @app.route('/', methods=["POST","GET"])
 def hello():
 	return render_template('index.html')
 
-@app.route('/homepage', methods=["POST","GET"])
-def home():
-	return render_template('index.html')
+@app.route("/display" , methods=['GET','POST'])
+def greaterMag():
+  getmag = str(request.args.get('fmagnitude'))
+  cursor.execute("select time, latitude, longitude, mag,id, place from equake where mag >"+getmag+";")
+  rows = cursor.fetchall()
+  cursor.execute("select count(*) as Num_of_Earthquakes from equake where mag > "+getmag+";")
+  count = cursor.fetchall()
+  return render_template('display.html', ecount=count[0][0], setquakes=rows)
 
-@app.route('/details',methods=["POST","GET"])
-def search():	
-	df = pd.read_csv('names.csv')
-	df1=df.replace(np.nan,"",regex=True)
-	data = df1.values.tolist()
-	return render_template('details.html',dict=data)
+@app.route("/rangeDisplay" , methods=['GET','POST'])
+def rangeMag():
+  getmagRange1 = str(request.args.get('fmagnRange1'))
+  getmagRange2 = str(request.args.get('fmagnRange2'))
+  getdateRange1 = str(request.args.get('fdateRange1'))
+  getdateRange2 = str(request.args.get('fdateRange2'))
+  cursor.execute("select time, latitude, longitude, mag,id, place from equake where mag >= "+getmagRange1+" and mag <= "+getmagRange2+" AND time between '"+getdateRange1+"' and '"+getdateRange2+"';")
+  rangeRows = cursor.fetchall()
+  return render_template('rangeDisplay.html', setrangeRows=rangeRows)
 
-@app.route('/takedata',methods=["POST","GET"])
-def searchdata():
-	df = pd.read_csv('names.csv')
-	df1=df.replace(np.nan,"",regex=True)
-	data = df1.values.tolist()
-	name = request.form.get("SearchBar")
-	return render_template('search.html',dict=data, name=name)
-	
+@app.route("/locationDisplay" , methods=['GET','POST'])
+def location():
+  getlongitude = str(request.args.get('flongitude'))
+  getlatitude = str(request.args.get('flatitude'))
+  getkmrange = str(request.args.get('fkmrange'))
 
-@app.route('/salarydata',methods=["POST","GET"])
-def saldata():
-	df = pd.read_csv('names.csv')
-	df1=df.replace(np.nan,"",regex=True)
-	data = df1.values.tolist()
-	people = []
-	sal = request.form.get("salBar")
-	sal = float(sal)
-	for items in data:
-		salary = 0
-		if(items[2] != "" and items[2] != " "):
-			salary = float(items[2])
-		if (salary < sal):
-			people.append(items)
-	return render_template('salarydata.html',dict=people, sal=sal)
+  leftlat = float(getlatitude)-float(getkmrange)/111   #converting km to degree
+  rightlat = float(getlatitude)+float(getkmrange)/111
+  uplong =   float(getlongitude)+float(getkmrange)/111
+  downlong = float(getlongitude)-float(getkmrange)/111
 
-@app.route('/update',methods=["POST","GET"])
-def updatedata():	
-	name = request.form.get("name")
-	print(name)
-	state = request.form.get("state")
-	salary = request.form.get("salary")
-	print(salary)
-	grade = request.form.get("grade")
-	room = request.form.get("room")
-	telnum = request.form.get("telnum")
-	keywords = request.form.get("keywords")
-	with open(tempPath, mode='w') as csv_file:
-		linewriter=csv.writer(csv_file)
-		mywriter=csv.DictWriter(csv_file,fieldnames=fieldnames)
-		mywriter.writeheader()
-		with open(path, mode='r') as csv_file:
-			myreader = csv.DictReader(csv_file)
-			for row in myreader:
-				if row['Name']==name:
-					print(row)
-					if(request.form['update'] == 'Update'):
-						linewriter.writerow([name,state,salary,grade,room,telnum,row['Picture'],keywords])
-					else:
-						continue
-				else:
-					mywriter.writerow(row)
-	os.remove(path)
-	os.rename(tempPath,path)
+  cursor.execute("select time, latitude, longitude, mag,id, place from quakes where (latitude>= "+str(leftlat)+" and latitude<= "+str(rightlat)+" ) AND ( longitude>= "+str(downlong)+" and longitude<= "+str(uplong)+");")
+  locationRows = cursor.fetchall()
+  return render_template('locationDisplay.html', setlocationRows=locationRows)
 
-	return render_template('index.html')
+
+
+@app.route("/clusterDisplay" , methods=['GET','POST'])
+def cluster():
+    getclustermag = str(request.args.get('fclustermag'))
+    cursor.execute("select time, latitude, longitude, mag,id, place from equake where mag = "+getclustermag+";")
+    clusterrows = cursor.fetchall()
+    cursor.execute("select count(*) as Num_of_Earthquakes from equake where mag = "+getclustermag+";")
+    clustercount = cursor.fetchall()
+    return render_template('clusterdisplay.html', setclustercount=clustercount[0][0], setclusterquakes=clusterrows)
+
+@app.route("/nightDisplay" , methods=['GET','POST'])
+def nightdisplay():
+  getlargemag = str(request.args.get('flargemag'))
+  cursor.execute("select time, latitude, longitude, mag,id, place from equake where mag> "+getlargemag+" and  (DATEADD(day, -DATEDIFF(day, 0, time), time) > '00:10:10.000' and DATEADD(day, -DATEDIFF(day, 0, time), time) < '05:00:00.000');")
+  nightRows = cursor.fetchall()
+  cursor.execute("select count(*) from equake where mag> "+getlargemag+" and  (DATEADD(day, -DATEDIFF(day, 0, time), time) > '00:10:10.000' and DATEADD(day, -DATEDIFF(day, 0, time), time) < '05:00:00.000');")
+  nightcount = cursor.fetchall()
+  return render_template('nightDisplay.html', setnightcount=nightcount[0][0],setnightRows=nightRows)
+
+
+
+
+if __name__ == '__main__':
+	app.run()
+

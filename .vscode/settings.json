@@ -1,4 +1,5 @@
 {
-    "appService.defaultWebAppToDeploy": "/subscriptions/318729a1-682e-4ef8-9f47-5397ba44b157/resourceGroups/assignment1Group/providers/Microsoft.Web/sites/WebAppAgain",
-    "appService.deploySubpath": "."
+    "appService.defaultWebAppToDeploy": "/subscriptions/318729a1-682e-4ef8-9f47-5397ba44b157/resourceGroups/assignment1Group/providers/Microsoft.Web/sites/EarthQuake-Assignment2",
+    "appService.deploySubpath": ".",
+    "python.pythonPath": ".venv/bin/python"
 }
