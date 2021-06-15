@@ -67,7 +67,7 @@ def cluster():
     clusterrows = cursor.fetchall()
     cursor.execute("select count(*) as Num_of_Earthquakes from equake where mag = "+getclustermag+";")
     clustercount = cursor.fetchall()
-    return render_template('clusterdisplay.html', setclustercount=clustercount[0][0], setclusterquakes=clusterrows)
+    return render_template('clusterDisplay.html', setclustercount=clustercount[0][0], setclusterquakes=clusterrows)
 
 @app.route("/nightDisplay" , methods=['GET','POST'])
 def nightdisplay():
