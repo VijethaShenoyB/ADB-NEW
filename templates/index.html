@@ -20,7 +20,7 @@
         <br>
         <div>
             <form action="/display" method="get">
-               Magnitude: <input type="text" name="fmagnitude"/>
+               Enter a magnitude greater than 5.0: <input type="text" name="fmagnitude"/>
              <input type="submit" value="Submit"><br/><br/>
            </form>
         </div><br/>
@@ -35,14 +35,22 @@
         </div><br/>
 
         <div>
-            <form action="/locationDisplay" method="get">
-               Latitude: <input type="text" name="flatitude"/>
-               Longitude: <input type="text" name="flongitude"/>
-               Surrounding Range in KM: <input type="text" name="fkmrange"/>
+            <form action="/timeDisplay" method="get">
+               Time_Lowerlimit: <input type="text" name="ftimeRange1"/>
+               Time_Upperlimit: <input type="text" name="ftimeRange2"/>
              <input type="submit" value="Submit"><br/><br/>
            </form>
         </div><br/>
-        <div>
+            <div>
+                <form action="/locationDisplay" method="get">
+                   Latitude: <input type="text" name="flatitude"/>
+                   Longitude: <input type="text" name="flongitude"/>
+                   Surrounding Range in KM: <input type="text" name="fkmrange"/>
+                 <input type="submit" value="Submit"><br/><br/>
+               </form>
+               </div><br/>
+
+            <div>
             <form action="/clusterDisplay" method="get">
                Find cluster of earthquakes with Magnitude: <input type="text" name="fclustermag"/>
              <input type="submit" value="Submit"><br/><br/>

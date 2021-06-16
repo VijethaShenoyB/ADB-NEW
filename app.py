@@ -39,9 +39,18 @@ def rangeMag():
   getmagRange2 = str(request.args.get('fmagnRange2'))
   getdateRange1 = str(request.args.get('fdateRange1'))
   getdateRange2 = str(request.args.get('fdateRange2'))
-  cursor.execute("select time, latitude, longitude, mag,id, place from equake where mag >= "+getmagRange1+" and mag <= "+getmagRange2+" AND time between '"+getdateRange1+"' and '"+getdateRange2+"';")
+  cursor.execute("select time, latitude, longitude, mag, id, place from equake where mag >= "+getmagRange1+" and mag <= "+getmagRange2+" AND time between '"+getdateRange1+"' and '"+getdateRange2+"';")
   rangeRows = cursor.fetchall()
   return render_template('rangeDisplay.html', setrangeRows=rangeRows)
+
+@app.route("/timeDisplay" , methods=['GET','POST'])
+def rangeMag():
+  gettimeRange1 = str(request.args.get('ftimeRange1'))
+  gettimeRange2 = str(request.args.get('ftimeRange2'))
+  cursor.execute("select max(mag)  from equake where (time>="+gettimeRange1+" and time<= "+gettimeRange2+");")
+  timeRows = cursor.fetchall()
+  return render_template('timeDisplay.html', settimeRows=timeRows)
+
 
 @app.route("/locationDisplay" , methods=['GET','POST'])
 def location():
@@ -54,10 +63,9 @@ def location():
   uplong =   float(getlongitude)+float(getkmrange)/111
   downlong = float(getlongitude)-float(getkmrange)/111
 
-  cursor.execute("select time, latitude, longitude, mag,id, place from quakes where (latitude>= "+str(leftlat)+" and latitude<= "+str(rightlat)+" ) AND ( longitude>= "+str(downlong)+" and longitude<= "+str(uplong)+");")
+  cursor.execute("select time, latitude, longitude, mag,id, place from equake;")
   locationRows = cursor.fetchall()
   return render_template('locationDisplay.html', setlocationRows=locationRows)
-
 
 
 @app.route("/clusterDisplay" , methods=['GET','POST'])
