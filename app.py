@@ -44,6 +44,19 @@ def rangeMag():
   return render_template('rangeDisplay.html', setrangeRows=rangeRows)
 
 
+@app.route("/etimeDisplay" , methods=['GET','POST'])
+def rangeMag():
+  getetimeRange1 = str(request.args.get('fetimeRange1'))
+  getetimeRange2 = str(request.args.get('fetimeRange2'))
+  getdepthRange1 = str(request.args.get('fdepthRange1'))
+  getdepthRange2 = str(request.args.get('fdepthRange2'))
+  cursor.execute("select etime, ptime, latitude, longitude, mag, id, place from quake where etime >= "+getetimeRange1+" and etime <= "+getetimeRange2+" AND depth between '"+getdepthRange1+"' and '"+getdepthRange2+"';")
+  eTimerangeRows = cursor.fetchall()
+  cursor.execute("select count(*) as Num_of_Earthquakes from quake where depth >= "+getetimeRange1+" and mag <= "+getetimeRange2+" AND depth between '"+getdepthRange1+"' and '"+getdepthRange2+"';")
+  depthcount = cursor.fetchall()
+  return render_template('etimeDisplay.html', setdepthcount=depthcount[0][0],seteTimerangeRows=eTimerangeRows)
+
+
 @app.route("/timeDisplay" , methods=['GET','POST'])
 def timeMag():
   gettimeRange1 = str(request.args.get('ftimeRange1'))
