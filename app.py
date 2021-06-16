@@ -43,13 +43,14 @@ def rangeMag():
   rangeRows = cursor.fetchall()
   return render_template('rangeDisplay.html', setrangeRows=rangeRows)
 
+
 @app.route("/timeDisplay" , methods=['GET','POST'])
-def rangeMag():
+def timeMag():
   gettimeRange1 = str(request.args.get('ftimeRange1'))
   gettimeRange2 = str(request.args.get('ftimeRange2'))
   cursor.execute("select max(mag)  from equake where (time>="+gettimeRange1+" and time<= "+gettimeRange2+");")
   timeRows = cursor.fetchall()
-  return render_template('timeDisplay.html', settimeRows=timeRows)
+  return render_template('timeDisplay.html',settimeRows=timeRows)
 
 
 @app.route("/locationDisplay" , methods=['GET','POST'])
