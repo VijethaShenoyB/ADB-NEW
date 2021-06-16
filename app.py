@@ -27,9 +27,9 @@ def hello():
 @app.route("/display" , methods=['GET','POST'])
 def greaterMag():
   getmag = str(request.args.get('fmagnitude'))
-  cursor.execute("select time, latitude, longitude, mag,id, place from equake where mag >"+getmag+";")
+  cursor.execute("select etime, ptime, latitude, longitude, mag,id, place from quake where mag >"+getmag+";")
   rows = cursor.fetchall()
-  cursor.execute("select count(*) as Num_of_Earthquakes from equake where mag > "+getmag+";")
+  cursor.execute("select count(*) as Num_of_Earthquakes from quake where mag > "+getmag+";")
   count = cursor.fetchall()
   return render_template('display.html', ecount=count[0][0], setquakes=rows)
 
@@ -39,7 +39,7 @@ def rangeMag():
   getmagRange2 = str(request.args.get('fmagnRange2'))
   getdateRange1 = str(request.args.get('fdateRange1'))
   getdateRange2 = str(request.args.get('fdateRange2'))
-  cursor.execute("select time, latitude, longitude, mag, id, place from equake where mag >= "+getmagRange1+" and mag <= "+getmagRange2+" AND time between '"+getdateRange1+"' and '"+getdateRange2+"';")
+  cursor.execute("select etime, ptime, latitude, longitude, mag, id, place from quake where mag >= "+getmagRange1+" and mag <= "+getmagRange2+" AND time between '"+getdateRange1+"' and '"+getdateRange2+"';")
   rangeRows = cursor.fetchall()
   return render_template('rangeDisplay.html', setrangeRows=rangeRows)
 
@@ -48,7 +48,7 @@ def rangeMag():
 def timeMag():
   gettimeRange1 = str(request.args.get('ftimeRange1'))
   gettimeRange2 = str(request.args.get('ftimeRange2'))
-  cursor.execute("select max(mag)  from equake where (time>="+gettimeRange1+" and time<= "+gettimeRange2+");")
+  cursor.execute("select max(mag), latitude, longitude, id, place from quake where (time>="+gettimeRange1+" and time<= "+gettimeRange2+");")
   timeRows = cursor.fetchall()
   return render_template('timeDisplay.html',settimeRows=timeRows)
 
@@ -64,7 +64,7 @@ def location():
   uplong =   float(getlongitude)+float(getkmrange)/111
   downlong = float(getlongitude)-float(getkmrange)/111
 
-  cursor.execute("select time, latitude, longitude, mag,id, place from equake;")
+  cursor.execute("select time, latitude, longitude, mag,id, place from quake;")
   locationRows = cursor.fetchall()
   return render_template('locationDisplay.html', setlocationRows=locationRows)
 
@@ -72,18 +72,18 @@ def location():
 @app.route("/clusterDisplay" , methods=['GET','POST'])
 def cluster():
     getclustermag = str(request.args.get('fclustermag'))
-    cursor.execute("select time, latitude, longitude, mag,id, place from equake where mag = "+getclustermag+";")
+    cursor.execute("select time, latitude, longitude, mag,id, place from quake where mag = "+getclustermag+";")
     clusterrows = cursor.fetchall()
-    cursor.execute("select count(*) as Num_of_Earthquakes from equake where mag = "+getclustermag+";")
+    cursor.execute("select count(*) as Num_of_Earthquakes from quake where mag = "+getclustermag+";")
     clustercount = cursor.fetchall()
     return render_template('clusterDisplay.html', setclustercount=clustercount[0][0], setclusterquakes=clusterrows)
 
 @app.route("/nightDisplay" , methods=['GET','POST'])
 def nightdisplay():
   getlargemag = str(request.args.get('flargemag'))
-  cursor.execute("select time, latitude, longitude, mag,id, place from equake where mag> "+getlargemag+" and  (DATEADD(day, -DATEDIFF(day, 0, time), time) > '00:10:10.000' and DATEADD(day, -DATEDIFF(day, 0, time), time) < '05:00:00.000');")
+  cursor.execute("select time, latitude, longitude, mag,id, place from quake where mag> "+getlargemag+" and  (DATEADD(day, -DATEDIFF(day, 0, time), time) > '00:10:10.000' and DATEADD(day, -DATEDIFF(day, 0, time), time) < '05:00:00.000');")
   nightRows = cursor.fetchall()
-  cursor.execute("select count(*) from equake where mag> "+getlargemag+" and  (DATEADD(day, -DATEDIFF(day, 0, time), time) > '00:10:10.000' and DATEADD(day, -DATEDIFF(day, 0, time), time) < '05:00:00.000');")
+  cursor.execute("select count(*) from quake where mag> "+getlargemag+" and  (DATEADD(day, -DATEDIFF(day, 0, time), time) > '00:10:10.000' and DATEADD(day, -DATEDIFF(day, 0, time), time) < '05:00:00.000');")
   nightcount = cursor.fetchall()
   return render_template('nightDisplay.html', setnightcount=nightcount[0][0],setnightRows=nightRows)
 
