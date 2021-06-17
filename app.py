@@ -94,7 +94,7 @@ def cluster():
 @app.route("/nightDisplay" , methods=['GET','POST'])
 def nightdisplay():
   getlargemag = str(request.args.get('flargemag'))
-  cursor.execute("select time, latitude, longitude, mag,id, place from quake where mag> "+getlargemag+" and  (DATEADD(day, -DATEDIFF(day, 0, time), time) > '00:10:10.000' and DATEADD(day, -DATEDIFF(day, 0, time), time) < '05:00:00.000');")
+  cursor.execute("select time, latitude, longitude, mag,id, place from equake where mag> "+getlargemag+" and  (DATEADD(day, -DATEDIFF(day, 0, time), time) > '00:10:10.000' and DATEADD(day, -DATEDIFF(day, 0, time), time) < '05:00:00.000');")
   nightRows = cursor.fetchall()
   cursor.execute("select count(*) from quake where mag> "+getlargemag+" and  (DATEADD(day, -DATEDIFF(day, 0, time), time) > '00:10:10.000' and DATEADD(day, -DATEDIFF(day, 0, time), time) < '05:00:00.000');")
   nightcount = cursor.fetchall()
