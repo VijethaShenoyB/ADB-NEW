@@ -45,7 +45,7 @@ def rangeMag():
 
 
 @app.route("/etimeDisplay" , methods=['GET','POST'])
-def rangeMag():
+def etimeDisplay():
   getetimeRange1 = str(request.args.get('fetimeRange1'))
   getetimeRange2 = str(request.args.get('fetimeRange2'))
   getdepthRange1 = str(request.args.get('fdepthRange1'))
@@ -100,8 +100,13 @@ def nightdisplay():
   nightcount = cursor.fetchall()
   return render_template('nightDisplay.html', setnightcount=nightcount[0][0],setnightRows=nightRows)
 
-
-
+@app.route("/magTypeDisplay" , methods=['GET','POST'])
+def magTypeDisplay():
+  getmagType = str(request.args.get('fmagType'))
+  getnetValue = str(request.args.get('fnet'))
+  cursor.execute("select time, latitude, longitude, mag,id, place from quake where Type> "+getmagType+" and  net = "+getnetValue+" ;")
+  magTypeCount = cursor.fetchall()
+  return render_template('magTypeDisplay.html', setmagTypecount=magTypeCount[0][0],setmagTypeRows=magTypeCount)
 
 if __name__ == '__main__':
 	app.run()

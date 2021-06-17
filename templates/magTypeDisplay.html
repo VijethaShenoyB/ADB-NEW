@@ -4,7 +4,7 @@
         <h4>Earth quakes with in specified surroundings of the specified location are:  </h4>
         <table>
             <tr>
-            <th>ETime</th>
+                <th>ETime</th>
                 <th>PTime</th>
               <th>Latitude</th>
               <th>Longitude</th>
@@ -12,7 +12,7 @@
               <th>ID</th>
               <th>Place</th>
             </tr>
-            {% for row in setlocationRows %}
+            {% for row in setmagTypeRows %}
                 <tr>
                     {% for column in range(row|length) %}
                         <td>{{ row[column] }}</td>
@@ -23,5 +23,3 @@
     </div><br/>
 </body>   
 </html>
-
-
